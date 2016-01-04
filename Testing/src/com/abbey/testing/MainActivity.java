@@ -1,7 +1,14 @@
 package com.abbey.testing;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -64,8 +71,15 @@ public class MainActivity extends Activity {
 	            String file = dir+count+".jpg";
 	            Log.d("##########################"+file, "##########################"+file);
 	            File newfile = new File(file);
+	       
+				
+	            
 	            try {
 	                newfile.createNewFile();
+	                InputStream is = new BufferedInputStream(new FileInputStream(file));
+					byte[] bytes = IOUtils.toByteArray(is);
+			        String imageStr = Base64.encodeBase64String(bytes);
+			        byte[] bytes2 = Base64.decodeBase64(imageStr);
 	            } catch (IOException e) {
 	            	e.printStackTrace();
 	            }       
